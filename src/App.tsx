@@ -1,10 +1,16 @@
 // import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import Button from './app/components/Button'
+import React, { MouseEventHandler } from 'react';
 
 function App() {
+  const clickme: MouseEventHandler = () => {
+    console.log("Clicked the button");
+  }
   return (
+    
     <div className="App">
+      <Button text="hello" onClick={clickme} />
       <header className="App-header">
         <img src={require("./logo.svg").default} className="App-logo" alt="logo" />
         <p>
@@ -19,6 +25,7 @@ function App() {
           Learn React
         </a>
       </header>
+      
     </div>
   );
 }
