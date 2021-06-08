@@ -10,7 +10,6 @@ import { AuthActions } from '../actions/AuthActions'
   }
   
   const AuthReducer = (state: AuthState = initialState, action: AuthActions) => {
-    console.log(state, action);
     switch (action.type) {
       case 'SET_ACCESS_TOKEN':
         return { ...state, accessToken: action.payload };
