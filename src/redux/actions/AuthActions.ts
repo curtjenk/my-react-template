@@ -17,6 +17,9 @@ export type AuthActions =
 | IEND_USER_SESSION;
 
 /*
+
+https://levelup.gitconnected.com/redux-hooks-with-typescript-4fba08f160ad
+
 Example usage in a component tsx file
 import React, { Dispatch } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -24,7 +27,7 @@ import { AppState } from './redux/reducers/rootReducter';
 import { AuthActions } from './redux/actions/AuthActions';
 
 function MyAuthComponent() {
-    const { auth } = useSelector((state: AppState) => state.name);
+    const { authReducer } = useSelector((state: AppState) => state.authReducer);
     const authDispatch = useDispatch<Dispatch<AuthActions>>();
 
     const handleSetAccessToken = (accessToken: string) => {
