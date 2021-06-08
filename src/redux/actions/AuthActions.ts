@@ -11,7 +11,7 @@ export interface IEND_USER_SESSION {
   payload?: string | null;
 }
 
-export type AuthTypes =
+export type AuthActions =
 | ISET_ACCESS_TOKEN
 | ISET_USER_TOKEN
 | IEND_USER_SESSION;
