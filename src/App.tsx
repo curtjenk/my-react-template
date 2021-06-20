@@ -1,51 +1,37 @@
-// import logo from './logo.svg';
-import './App.css';
-import Button from './app/components/Button'
-import React, { MouseEventHandler, Dispatch } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { AppState } from './redux/reducers/rootReducer';
-import { AuthActions } from './redux/actions/AuthActions';
+import ProtectedRoute, { ProtectedRouteProps } from "./app/components/ProtectedRoute";
+import { Route, Switch } from 'react-router';
+import Homepage from "./app/pages/Homepage";
+import Dashboard from "./app/pages/Dashboard";
+import SignInSide from "./app/pages/SignInSide";
+import globalState from "./contexts/GlobalStore";
+import { useState } from "@hookstate/core";
 
-function App() {
-  const clickme: MouseEventHandler = () => {
-    console.log("Clicked the button");
+export default function App() {
+  const state = useState(globalState);
+  
+  const setRedirectPath = (path: string) => {
+    state.redirectPath.set(path);
+   
   }
-  const { accessToken } = useSelector((state: AppState) => state.authReducer);
-  const authDispatch = useDispatch<Dispatch<AuthActions>>();
+  console.log("Is Authenticated", state.isAuthenticated.get());
 
-  const handleSetAccessToken = (e: React.ChangeEvent<HTMLInputElement>) => {
-      authDispatch({type: 'SET_ACCESS_TOKEN', payload: e.target.value})
-  }
+  const defaultProtectedRouteProps: ProtectedRouteProps = {
+    isAuthenticated: !!state.isAuthenticated.get(),
+    authenticationPath: '/login',
+    redirectPath: state.redirectPath.get(),
+    setRedirectPath: setRedirectPath
+  };
 
   return (
-    
-    <div className="App">
-      <div>
-            
-            <div>
-                <input type="text" onChange={handleSetAccessToken}/>
-                {accessToken}
-            </div>
-        </div>
-
-    
-      {/* <header className="App-header">
-        <img src={require("./logo.svg").default} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      
+  
+    <div>
+      <Switch>
+        <ProtectedRoute {...defaultProtectedRouteProps} 
+              exact={true} path='/' component={Homepage} />
+        <ProtectedRoute {...defaultProtectedRouteProps} 
+              path='/dashboard' component={Dashboard} />
+        <Route path='/login' component={SignInSide} />
+      </Switch>
     </div>
   );
-}
-
-export default App;
+};

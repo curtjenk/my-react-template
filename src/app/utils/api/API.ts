@@ -1,6 +1,5 @@
 // eslint - disable import /first
 import handleError from './APIError';
-// import { store } from '../../store';
 import axios from 'axios';
 
 // Init Axios Instance
@@ -38,7 +37,7 @@ const getConfig = async (responseType?: any) => {
   };
 };
 
-type APIProps = {
+export type APIProps = {
   path: string,
   responseType?: string,
   file?: any,
