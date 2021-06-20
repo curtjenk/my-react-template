@@ -5,6 +5,7 @@ import Dashboard from "./app/pages/Dashboard";
 import SignInSide from "./app/pages/SignInSide";
 import globalState from "./contexts/GlobalStore";
 import { useState } from "@hookstate/core";
+import ReactNotification from 'react-notifications-component';
 
 export default function App() {
   const state = useState(globalState);
@@ -25,6 +26,7 @@ export default function App() {
   return (
   
     <div>
+      <ReactNotification />
       <Switch>
         <ProtectedRoute {...defaultProtectedRouteProps} 
               exact={true} path='/' component={Homepage} />

@@ -85,3 +85,5 @@ export const API_PUT = async ({path, body}: APIProps) => {
 export const API_DEL = async ({path}: APIProps) => {
   return await axiosInstance.delete(path, await getConfig());
 };
+
+export const API_BASE_URL = process.env.REACT_APP_SERVER_URL;

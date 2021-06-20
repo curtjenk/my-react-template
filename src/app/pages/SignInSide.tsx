@@ -20,14 +20,14 @@ import { Delay } from '../utils/Delay';
 import { CircularProgress } from '@material-ui/core';
 import globalState from '../../contexts/GlobalStore';
 import { useState } from '@hookstate/core';
-
+import AuthService from '../utils/services/auth.service';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: 'url(https://source.unsplash.com/featured/?jesus)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -76,16 +76,24 @@ export default function SignInSide(props: any): ReactElement {
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
   
-  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<FormData> = async (formData: FormData) => {
+    console.log(formData)
     loading.set(true);
-    await Delay(5000);  //simulate time to make api call
-    loading.set(false);
-    gState.isAuthenticated.set(true);
-    gState.userName.set(data.email);
-    history.push(gState.redirectPath.get());
-
-    reset(data);
+    
+    // await Delay(5000);  //simulate time to make api call
+    try {
+      const { data } = await AuthService.login(formData.email, formData.password);
+      console.log(data);
+      gState.isAuthenticated.set(true);
+      gState.userName.set(data.email);
+      console.log("redirecting to", gState.redirectPath.get())
+      history.push(gState.redirectPath.get());  // Redirect
+    } catch (err) {
+      console.log('err', err);
+    } finally {
+      loading.set(false);
+      reset(formData);
+    }
     
   };
 

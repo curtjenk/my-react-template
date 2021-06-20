@@ -1,8 +1,6 @@
 
-// const API_URL = "http://localhost:8080/api/auth/";
-
 import JwtResponse from "../../models/JwtResponse";
-import { APIProps, API_POST } from "../api/API";
+import { APIProps, API_BASE_URL, API_POST } from "../api/API";
 
 // const register = (username: string, email: string, password: string): any => {
 //   return api.post(API_URL + "signup", {
@@ -12,22 +10,14 @@ import { APIProps, API_POST } from "../api/API";
 //   });
 // };
 
-const login = (username: string, password: string) => {
+const login =  async (username: string, password: string) => {
   const apiProps: APIProps = {
-    path: "auth/sigin",
+    path: `${API_BASE_URL}/auth/signin`,
     body: { username: username, password: password}
   }
-  
-  return API_POST(apiProps )
-    .then((response) => {
-      const data: JwtResponse = response.data;
-      
-      if (data.token) {
-        localStorage.setItem("user", JSON.stringify(data));
-      }
+ 
+  return await API_POST(apiProps)
 
-      return response.data;
-    })
 };
 
 const logout = (): void => {
@@ -44,9 +34,10 @@ const getCurrentUser = (): JwtResponse | null => {
   }
 };
 
-export default {
-  // register,
+const AuthService = {
   login,
   logout,
   getCurrentUser,
 };
+
+export default AuthService;
