@@ -1,4 +1,6 @@
 
+import { AxiosResponse } from "axios";
+import globalState from "../../../contexts/GlobalStore";
 import JwtResponse from "../../models/JwtResponse";
 import { APIProps, API_BASE_URL, API_POST } from "../api/API";
 
@@ -10,28 +12,33 @@ import { APIProps, API_BASE_URL, API_POST } from "../api/API";
 //   });
 // };
 
-const login =  async (username: string, password: string) => {
+const login =  async (username: string, password: string): Promise<AxiosResponse<any>> => {
   const apiProps: APIProps = {
     path: `${API_BASE_URL}/auth/signin`,
     body: { username: username, password: password}
   }
- 
-  return await API_POST(apiProps)
+  
+  try {
+    const resp = await API_POST(apiProps);
+    globalState.isAuthenticated.set(true);
+    globalState.userName.set(username);
+    return resp;
+  } catch (err) {
+    console.log("login exception caught")
+    globalState.isAuthenticated.set(false);
+    return Promise.reject(err);
+  }
 
 };
 
 const logout = (): void => {
-  localStorage.removeItem("user");
+  globalState.isAuthenticated.set(false);
+  globalState.userName.set('');
+  globalState.tokenData.set(undefined);
 };
 
-const getCurrentUser = (): JwtResponse | null => {
-  const user: string | null  = localStorage.getItem("user");
-  if (user) {
-    const jwtResponse = JSON.parse(user) as JwtResponse;
-    return jwtResponse;
-  } else {
-    return null;
-  }
+const getCurrentUser = (): JwtResponse | undefined => {
+  return globalState.tokenData.get();
 };
 
 const AuthService = {

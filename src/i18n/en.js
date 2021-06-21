@@ -9,7 +9,7 @@ const defaultObj = {
     // Notifications
     APP_NOTIFICATION_SUCCESS: 'Success',
     APP_NOTIFICATION_FAILURE: 'Something went wrong, please try again later',
-  
+    APP_CREDENTIALS_FAILURE: 'Invalid credentials, please try again',
     APP_UNAUTHORIZED_MESSAGE: 'Unauthorized to view this Application',
   
     // Nav Menu

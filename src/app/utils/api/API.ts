@@ -16,10 +16,10 @@ axiosInstance.interceptors.request.use(req => {
 axiosInstance.interceptors.response.use(res => {
   return res;
 }, error => {
-  console.log('error:', error)
+  // console.log('error-response:', error.response)
   // Send Error to handler
-  const handledError = handleError(error);
-  return Promise.reject(handledError.response);
+  handleError(error);
+  return Promise.reject(error.response);
 });
 
 const getConfig = async (responseType?: any) => {
