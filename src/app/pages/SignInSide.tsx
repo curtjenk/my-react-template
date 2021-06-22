@@ -18,9 +18,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 // import { Delay } from '../utils/Delay';
 import { CircularProgress } from '@material-ui/core';
-import globalState from '../../contexts/GlobalStore';
+import globalState from '../../stores/GlobalStore';
 import { useState } from '@hookstate/core';
-import AuthService from '../utils/services/auth.service';
+import AuthService from '../services/auth.service';
 
 const useStyles = makeStyles((theme) => ({
   root: {

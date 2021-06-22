@@ -19,9 +19,6 @@ export default function ProtectedRoute({
     setRedirectPath, ...routeProps}: ProtectedRouteProps) 
 {
   const currentLocation = useLocation();
-
-  console.log(isAuthenticated);
-  console.log(currentLocation);
   
   useEffect(() => {
     if (!isAuthenticated) {

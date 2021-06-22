@@ -5,6 +5,6 @@ export type Session = {
 
   }
   
-  export const initialSession: Session = {
+export const initialSession: Session = {
     redirectPath: ''
-  };
+};

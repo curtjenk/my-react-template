@@ -1,6 +1,6 @@
 // import { endUserSession } from '../../actions';
 // import { store } from '../../store';
-import globalState from '../../../contexts/GlobalStore';
+import globalState from '../../../stores/GlobalStore';
 import I18n from '../../../i18n/utils';
 import { showFailureNotification } from '../Notification';
 
