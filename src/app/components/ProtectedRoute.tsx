@@ -19,16 +19,21 @@ export default function ProtectedRoute({
     setRedirectPath, ...routeProps}: ProtectedRouteProps) 
 {
   const currentLocation = useLocation();
-  
+  console.log("current location", currentLocation)
   useEffect(() => {
     if (!isAuthenticated) {
+      console.log("PR useEffect(): CurrentLocation")
       setRedirectPath(currentLocation.pathname);
     }
   }, [isAuthenticated, setRedirectPath, currentLocation]);
 
-  if(isAuthenticated && redirectPath === currentLocation.pathname) {
+  // if(isAuthenticated && redirectPath === currentLocation.pathname) {
+  if(isAuthenticated) {
+    console.log("loading new component")
     return <Route {...routeProps} />;
   } else {
-    return <Redirect to={{ pathname: isAuthenticated ? redirectPath : authenticationPath }} />;
+    let whereTo = isAuthenticated ? redirectPath : authenticationPath ;
+    console.log("protrout redirecting to ", whereTo)
+    return <Redirect to={{ pathname: whereTo }} />;
   }
 };

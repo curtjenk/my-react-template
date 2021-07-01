@@ -7,22 +7,23 @@ import globalState from "./stores/GlobalStore";
 import { useState } from "@hookstate/core";
 import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css'
+import NotFound from "./app/pages/NotFound";
 
 export default function App() {
   const state = useState(globalState);
   
   const setRedirectPath = (path: string) => {
-    state.redirectPath.set(path);
-   
+    state.redirectPath.set(path); 
   }
-  console.log("Is Authenticated", state.isAuthenticated.get());
-
+  
   const defaultProtectedRouteProps: ProtectedRouteProps = {
     isAuthenticated: !!state.isAuthenticated.get(),
-    authenticationPath: '/login',
+    authenticationPath: '/',
     redirectPath: state.redirectPath.get(),
     setRedirectPath: setRedirectPath
   };
+
+  console.log("RouteProps", defaultProtectedRouteProps);
 
   return (
   
@@ -30,10 +31,11 @@ export default function App() {
         <ReactNotification />
         <Switch>
           <ProtectedRoute {...defaultProtectedRouteProps} 
-                exact={true} path='/' component={Homepage} />
+                exact={true} path='/home' component={Homepage} />
           <ProtectedRoute {...defaultProtectedRouteProps} 
-                path='/dashboard' component={Dashboard} />
-          <Route path='/login' component={SignInSide} />
+                exact={true} path='/dashboard' component={Dashboard} />
+          <Route exact={true} path='/' component={SignInSide} />
+          <Route component={NotFound} />
         </Switch>
     </div>
   );
