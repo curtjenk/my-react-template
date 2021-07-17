@@ -1,4 +1,5 @@
 // eslint - disable import /first
+import globalState from "../../../stores/GlobalStore";
 import handleError from './APIError';
 import axios from 'axios';
 
@@ -23,9 +24,7 @@ axiosInstance.interceptors.response.use(res => {
 });
 
 const getConfig = async (responseType?: any) => {
-  // Get latest accessToken from Redux
-  // const { accessToken } = await store.getState().auth;
-  const accessToken = "";
+  const accessToken = globalState.tokenData.get()?.token;
   let configResponseType = responseType ? responseType : 'json';
   return {
     responseType: configResponseType,

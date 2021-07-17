@@ -15,6 +15,6 @@ export const inititalState: GlobalStateType = {
 };
 
 const globalState = createState<GlobalStateType>(inititalState);
-globalState.attach(Persistence('global-state'));
+globalState.attach(Persistence('gs'));
 
 export default globalState;

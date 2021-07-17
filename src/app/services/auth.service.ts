@@ -20,6 +20,13 @@ const login =  async (username: string, password: string): Promise<AxiosResponse
   
   try {
     const resp = await API_POST(apiProps);
+    if (resp.status === 200) {
+      globalState.isAuthenticated.set(true);
+      globalState.tokenData.set(resp.data);
+    } else {
+      globalState.isAuthenticated.set(false);
+      globalState.tokenData.set(undefined);
+    }
     return resp;
   } catch (err) {
     console.log("login exception caught");

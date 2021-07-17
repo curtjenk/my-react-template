@@ -70,8 +70,8 @@ export default function SignInSide(props: any): ReactElement {
 
   useEffect(() => {
     //Logout the user
+    AuthService.logout();
     console.log("log out user");
-    // gState.isAuthenticated.set(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -85,12 +85,9 @@ export default function SignInSide(props: any): ReactElement {
       const { status } = resp;
       console.log("login onSubmit(): ", status);
       if (status === 200) {
-        gState.isAuthenticated.set(true);
         gState.userName.set(formData.email);
-        // gState.redirectPath.set('/home');
         history.push("/home");  // Redirect
       } else {
-        gState.isAuthenticated.set(false)
         loading.set(false);
         reset(formData);
       }
